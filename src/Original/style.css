@@ -1,0 +1,637 @@
+/* Original/style.css - Juego de Cartas TCG Rick & Morty */
+
+.original-container {
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+}
+
+/* Header del juego */
+.game-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease;
+}
+
+.game-header h1 {
+  font-size: 3rem;
+  color: white;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+  margin-bottom: 0.5rem;
+  background:  #ffffff;
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+}
+
+.game-subtitle {
+  color: rgba(255,255,255,0.9);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Pantalla de carga */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.portal-loader {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #00ff00, #ffff00, #ff00ff, #00ffff, #00ff00);
+  animation: spin 2s linear infinite;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 60px rgba(0,255,0,0.5);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Fase de selección */
+.selection-phase {
+  animation: fadeIn 0.5s ease;
+}
+
+.selection-info {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.selection-info h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.team-counter {
+  display: inline-block;
+  background: rgba(255,255,255,0.95);
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #764ba2;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Grid de personajes */
+.characters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+/* Carta de personaje */
+.character-card {
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  padding: 1.5rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.character-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #f093fb, #f5576c, #4facfe, #00f2fe);
+  border-radius: 20px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.character-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.character-card:hover::before {
+  opacity: 1;
+}
+
+.character-card.selected {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.character-card.selected::before {
+  opacity: 1;
+}
+
+.card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.character-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* Header de la carta */
+.card-header {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.card-header img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card-rarity {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+}
+
+/* Nombre del personaje */
+.character-card h3 {
+  font-size: 1.3rem;
+  margin: 1rem 0;
+  text-align: center;
+  color: inherit;
+}
+
+.character-card.selected h3 {
+  color: white;
+}
+
+/* Contenedor de stats */
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(0,0,0,0.05);
+  border-radius: 15px;
+}
+
+.character-card.selected .stats-container {
+  background: rgba(255,255,255,0.1);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+/* Caja de habilidad */
+.ability-box {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  min-height: 80px;
+}
+
+.character-card.selected .ability-box {
+  background: rgba(255,255,255,0.2);
+}
+
+.ability-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.ability-description {
+  font-size: 0.9rem;
+  opacity: 0.95;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Poder total */
+.total-power {
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 0.75rem;
+  background: rgba(0,0,0,0.05);
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.character-card.selected .total-power {
+  background: rgba(255,255,255,0.2);
+}
+
+.total-power strong {
+  color: #f5576c;
+  font-size: 1.3rem;
+  margin-left: 0.5rem;
+}
+
+.character-card.selected .total-power strong {
+  color: #ffd700;
+}
+
+/* Badge de seleccionado */
+.selected-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  animation: bounceIn 0.5s ease;
+  box-shadow: 0 4px 10px rgba(76,175,80,0.3);
+}
+
+/* Equipo seleccionado */
+.selected-team {
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.selected-team h3 {
+  color: #764ba2;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.mini-team {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.mini-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.mini-card:hover {
+  transform: scale(1.1);
+}
+
+.mini-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-bottom: 0.5rem;
+}
+
+.mini-card span {
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Fase de batalla */
+.battle-phase {
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.battle-phase h2 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+  animation: pulse 1s infinite;
+}
+
+.battle-arena {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.team-display {
+  flex: 1;
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.team-display h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #764ba2;
+}
+
+.team-cards {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.battle-card {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  padding: 1rem;
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  animation: slideIn 0.5s ease;
+}
+
+.battle-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-bottom: 0.5rem;
+}
+
+.battle-card p {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.mini-stats {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.team-total {
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.vs-indicator {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+  animation: bounce 1s infinite;
+}
+
+/* Fase de resultado */
+.result-phase {
+  animation: fadeIn 0.5s ease;
+}
+
+.result-banner {
+  text-align: center;
+  padding: 3rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  animation: bounceIn 0.8s ease;
+}
+
+.result-banner.player {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  color: white;
+  box-shadow: 0 15px 35px rgba(76,175,80,0.3);
+}
+
+.result-banner.computer {
+  background: linear-gradient(135deg, #f44336, #e91e63);
+  color: white;
+  box-shadow: 0 15px 35px rgba(244,67,54,0.3);
+}
+
+.result-banner.draw {
+  background: linear-gradient(135deg, #ff9800, #ffc107);
+  color: white;
+  box-shadow: 0 15px 35px rgba(255,152,0,0.3);
+}
+
+.result-banner h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.result-banner p {
+  font-size: 1.3rem;
+}
+
+.final-teams {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.final-team {
+  background: rgba(255,255,255,0.95);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.final-team h3 {
+  color: #764ba2;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.final-cards {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.final-card {
+  text-align: center;
+}
+
+.final-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #764ba2;
+  margin-bottom: 0.5rem;
+}
+
+.final-card p {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Botón de jugar de nuevo */
+.play-again-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 1rem 3rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.play-again-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-header h1 {
+    font-size: 2rem;
+  }
+
+  .characters-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .battle-arena {
+    flex-direction: column;
+  }
+
+  .final-teams {
+    flex-direction: column;
+  }
+
+  .team-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
