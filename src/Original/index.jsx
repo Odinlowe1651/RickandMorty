@@ -14,35 +14,151 @@ function Original() {
 
   // Habilidades cómicas para los personajes
   const getCharacterAbility = (character) => {
-    const abilities = {
-      'Rick Sanchez': { name: 'Portal Borracho', description: 'Se escapa con un portal pero vuelve más ebrio (+50 ATK)' },
-      'Morty Smith': { name: 'Ansiedad Extrema', description: 'Grita tan fuerte que aturde al enemigo (+30 DEF)' },
-      'Summer Smith': { name: 'Instagram Influencer', description: 'Distrae al enemigo con selfies (-20 ATK enemigo)' },
-      'Beth Smith': { name: 'Cirugía de Caballos', description: 'Cura heridas aleatorias (+40 HP)' },
-      'Jerry Smith': { name: 'Ser Patético', description: 'Es tan patético que da pena atacarlo (+60 DEF)' },
-      'Birdperson': { name: 'Vuelo Majestuoso', description: 'Esquiva todo por estar volando (+45 DEF)' },
-      'Squanchy': { name: 'Squanchificar', description: 'Se transforma y squanchea todo (+70 ATK)' },
-      'Mr. Poopybutthole': { name: 'Ooh-wee!', description: 'Anima tanto al equipo que todos mejoran (+25 ALL)' },
-      'Evil Morty': { name: 'Manipulación', description: 'Controla mentes débiles (+80 ATK)' },
-      'Mr. Meeseeks': { name: '¡Mírame!', description: 'Cumple una tarea y desaparece (+100 ATK, -100 HP)' }
-    }
-
-    // Si el personaje tiene una habilidad específica
-    if (abilities[character.name]) {
-      return abilities[character.name]
-    }
-
-    // Habilidades genéricas basadas en características
-    const genericAbilities = [
-      { name: 'Grito Dimensional', description: `Grita "${character.name}" confundiendo al enemigo (+35 ATK)` },
-      { name: 'Bailar Sin Sentido', description: 'Baila tan mal que distrae (+30 DEF)' },
-      { name: 'Existencia Cuestionable', description: 'Nadie sabe si existe realmente (+40 HP)' },
-      { name: 'Burp Tóxico', description: 'Eructa toxinas interdimensionales (+45 ATK)' },
-      { name: 'Crisis Existencial', description: 'Se cuestiona todo y se vuelve impredecible (+50 ATK)' }
-    ]
-
-    return genericAbilities[character.id % genericAbilities.length]
+  // Habilidades específicas para personajes principales
+  const specificAbilities = {
+    'Rick Sanchez': { name: 'Portal Borracho', description: 'Se escapa con un portal pero vuelve más ebrio (+50 ATK)' },
+    'Morty Smith': { name: 'Ansiedad Extrema', description: 'Grita tan fuerte que aturde al enemigo (+30 DEF)' },
+    'Summer Smith': { name: 'Instagram Influencer', description: 'Distrae al enemigo con selfies (-20 ATK enemigo)' },
+    'Beth Smith': { name: 'Cirugía de Caballos', description: 'Cura heridas aleatorias (+40 HP)' },
+    'Jerry Smith': { name: 'Ser Patético', description: 'Es tan patético que da pena atacarlo (+60 DEF)' },
+    'Birdperson': { name: 'Vuelo Majestuoso', description: 'Esquiva todo por estar volando (+45 DEF)' },
+    'Squanchy': { name: 'Squanchificar', description: 'Se transforma y squanchea todo (+70 ATK)' },
+    'Mr. Poopybutthole': { name: 'Ooh-wee!', description: 'Anima tanto al equipo que todos mejoran (+25 ALL)' },
+    'Evil Morty': { name: 'Manipulación', description: 'Controla mentes débiles (+80 ATK)' },
+    'Mr. Meeseeks': { name: '¡Mírame!', description: 'Cumple una tarea y desaparece (+100 ATK, -100 HP)' },
+    'Scary Terry': { name: 'Pesadilla Recurrente', description: 'Persigue en sueños diciendo "bitch" (+55 ATK)' },
+    'Unity': { name: 'Asimilación Colectiva', description: 'Controla a todos al mismo tiempo (+70 ATK)' },
+    'Abradolf Lincler': { name: 'Conflicto Interno', description: 'Lucha contra sí mismo confundiendo a todos (+40 DEF)' }
   }
+
+  if (specificAbilities[character.name]) {
+    return specificAbilities[character.name]
+  }
+
+  // Sistema dinámico basado en características del personaje
+  const abilityBySpecies = {
+    'Human': [
+      { name: 'Drama Existencial', description: `${character.name} tiene una crisis y pelea con furia (+45 ATK)` },
+      { name: 'Ingenio Humano', description: 'Usa herramientas improvisadas (+35 DEF)' },
+      { name: 'Adrenalina', description: 'El miedo lo hace más fuerte (+40 ATK)' }
+    ],
+    'Alien': [
+      { name: 'Tecnología Alienígena', description: 'Usa gadgets de su planeta (+50 ATK)' },
+      { name: 'Fisiología Extraña', description: 'Su cuerpo raro lo hace resistente (+45 DEF)' },
+      { name: 'Telepatía Espacial', description: 'Lee mentes y predice ataques (+40 DEF)' }
+    ],
+    'Humanoid': [
+      { name: 'Mutación Ventajosa', description: 'Sus rarezas le dan poder (+45 HP)' },
+      { name: 'Híbrido Poderoso', description: 'Lo mejor de dos mundos (+40 ATK)' },
+      { name: 'Adaptación Rápida', description: 'Se adapta a cualquier situación (+35 DEF)' }
+    ],
+    'Robot': [
+      { name: 'Actualización 2.0', description: 'Se mejora a sí mismo (+50 ATK)' },
+      { name: 'Firewall Cuántico', description: 'Bloquea todos los ataques (+60 DEF)' },
+      { name: 'Autorreparación', description: 'Se repara con chatarra (+45 HP)' }
+    ],
+    'Cronenberg': [
+      { name: 'Mutación Grotesca', description: 'Es tan horrible que paraliza (+55 ATK)' },
+      { name: 'Tentáculos', description: 'Ataca desde todas direcciones (+60 ATK)' },
+      { name: 'Regeneración Aberrante', description: 'Regenera partes perdidas (+50 HP)' }
+    ],
+    'Mythological Creature': [
+      { name: 'Poder Mítico', description: 'Invoca poderes antiguos (+65 ATK)' },
+      { name: 'Bendición Divina', description: 'Los dioses lo protegen (+55 DEF)' },
+      { name: 'Inmortalidad', description: 'Simplemente no muere (+70 HP)' }
+    ],
+    'Animal': [
+      { name: 'Instinto Salvaje', description: 'Ataca con furia animal (+45 ATK)' },
+      { name: 'Sentidos Agudos', description: 'Detecta peligros y los evade (+40 DEF)' },
+      { name: 'Manada', description: 'Llama a sus amigos animales (+35 ATK)' }
+    ]
+  }
+
+  // Habilidades por estado (status)
+  const abilityByStatus = {
+    'Alive': [
+      { name: 'Ganas de Vivir', description: 'Lucha con todo para sobrevivir (+40 HP)' },
+      { name: 'Vitalidad', description: 'Está lleno de energía (+35 ATK)' }
+    ],
+    'Dead': [
+      { name: 'Ya Estoy Muerto', description: 'No le teme a nada (+60 ATK)' },
+      { name: 'Fantasma Vengativo', description: 'Regresa del más allá (+50 DEF)' }
+    ],
+    'unknown': [
+      { name: 'Schrödinger', description: 'Está vivo y muerto a la vez (+55 HP)' },
+      { name: 'Misterio Cuántico', description: 'Nadie sabe qué es (+45 DEF)' }
+    ]
+  }
+
+  // Habilidades por género
+  const abilityByGender = {
+    'Male': [
+      { name: 'Masculinidad Tóxica', description: 'Golpea todo para demostrar que es fuerte (+40 ATK)' },
+      { name: 'Barba Protectora', description: 'Su barba lo protege (+30 DEF)' }
+    ],
+    'Female': [
+      { name: 'Furia Femenina', description: 'Desata su ira contenida (+45 ATK)' },
+      { name: 'Multitarea', description: 'Hace mil cosas a la vez (+35 DEF)' }
+    ],
+    'Genderless': [
+      { name: 'Sin Límites', description: 'Trasciende conceptos humanos (+50 ATK)' },
+      { name: 'Forma Fluida', description: 'Cambia de forma a voluntad (+40 DEF)' }
+    ],
+    'unknown': [
+      { name: 'Género Misterioso', description: 'Su misterio confunde (+35 DEF)' },
+      { name: 'Identidad Secreta', description: 'Nadie sabe quién es realmente (+40 HP)' }
+    ]
+  }
+
+  // Habilidades aleatorias divertidas
+  const randomAbilities = [
+    { name: 'Grito de Guerra', description: `Grita "${character.name} SMASH!" (+35 ATK)` },
+    { name: 'Baile Intimidante', description: 'Baila tan mal que asusta (+30 DEF)' },
+    { name: 'Chiste Malo', description: 'Cuenta chistes tan malos que dañan (+40 ATK)' },
+    { name: 'Selfie Mortal', description: 'Toma selfies en plena batalla (+35 ATK)' },
+    { name: 'Berrinche Cósmico', description: 'Hace un berrinche que destroza todo (+45 ATK)' },
+    { name: 'Abrazo Incómodo', description: 'Da abrazos muy incómodos (+30 DEF)' },
+    { name: 'Karaoke Dimensional', description: 'Canta tan mal que rompe dimensiones (+50 ATK)' },
+    { name: 'Meme Viviente', description: 'Se vuelve viral y gana poder (+40 HP)' },
+    { name: 'Procrastinación', description: 'Pospone el daño para después (+45 DEF)' },
+    { name: 'Spoiler', description: 'Cuenta el final y arruina todo (+35 ATK)' },
+    { name: 'Cringe Máximo', description: 'Es tan cringe que paraliza (+40 DEF)' },
+    { name: 'Daddy Issues', description: 'Sus problemas paternales le dan fuerza (+45 ATK)' },
+    { name: 'Síndrome del Impostor', description: 'Finge ser más fuerte (+35 HP)' },
+    { name: 'Karen Mode', description: 'Pide hablar con el gerente (+50 ATK)' },
+    { name: 'Friendzone', description: 'Pone a todos en la friendzone (+40 DEF)' }
+  ]
+
+  // Seleccionar habilidad basada en características disponibles
+  let possibleAbilities = []
+
+  // Agregar por especie
+  if (character.species && abilityBySpecies[character.species]) {
+    possibleAbilities.push(...abilityBySpecies[character.species])
+  }
+
+  // Agregar por estado
+  if (character.status && abilityByStatus[character.status]) {
+    possibleAbilities.push(...abilityByStatus[character.status])
+  }
+
+  // Agregar por género
+  if (character.gender && abilityByGender[character.gender]) {
+    possibleAbilities.push(...abilityByGender[character.gender])
+  }
+
+  // Si no hay habilidades específicas, usar las aleatorias
+  if (possibleAbilities.length === 0) {
+    possibleAbilities = randomAbilities
+  } else {
+    // Mezclar con algunas aleatorias para más variedad
+    possibleAbilities.push(...randomAbilities.slice(0, 5))
+  }
+
+  // Seleccionar una habilidad usando el ID del personaje como seed para consistencia
+  const index = (character.id * 13 + character.name.length * 7) % possibleAbilities.length
+  return possibleAbilities[index]
+}
 
   // Generar stats para cada personaje
   const generateCharacterStats = (character) => {
