@@ -168,9 +168,7 @@ const selectComputerTeam = () => {
     )
     if (remaining.length > 0) {
       computerSelection.push(remaining[0])
-    } else {
-      // Si no hay más únicos, puede repetir
-      computerSelection.push(availableCharacters[0])
+    
     }
   }
 
