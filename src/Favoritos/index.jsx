@@ -1,30 +1,27 @@
-// Favoritos/index.jsx
+// Favoritos/index.jsx - Completo con navegación a detalles
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './style.css'
 
 function Favoritos() {
   const [favorites, setFavorites] = useState([])
-  const [filter, setFilter] = useState('all') // all, alive, dead, unknown
+  const [filter, setFilter] = useState('all')
+  const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
 
   // Cargar favoritos del localStorage
   useEffect(() => {
-    loadFavorites()
-  }, [])
-
-  const loadFavorites = () => {
     const savedFavorites = localStorage.getItem('rickMortyFavorites')
     if (savedFavorites) {
       setFavorites(JSON.parse(savedFavorites))
     }
-  }
+  }, [])
 
-  // Eliminar de favoritos
+  // Eliminar un favorito
   const removeFavorite = (characterId) => {
-    const newFavorites = favorites.filter(fav => fav.id !== characterId)
-    setFavorites(newFavorites)
-    localStorage.setItem('rickMortyFavorites', JSON.stringify(newFavorites))
+    const updatedFavorites = favorites.filter(char => char.id !== characterId)
+    setFavorites(updatedFavorites)
+    localStorage.setItem('rickMortyFavorites', JSON.stringify(updatedFavorites))
   }
 
   // Limpiar todos los favoritos
@@ -35,149 +32,189 @@ function Favoritos() {
     }
   }
 
-  // Filtrar favoritos por status
-  const filteredFavorites = filter === 'all'
-    ? favorites
-    : favorites.filter(char => char.status.toLowerCase() === filter)
+  // Navegar a detalles
+  const goToDetails = (characterId) => {
+    navigate(`/detalle/${characterId}`)
+  }
 
-  // Estadísticas de favoritos
+  // Filtrar favoritos
+  const getFilteredFavorites = () => {
+    let filtered = [...favorites]
+
+    // Filtrar por búsqueda
+    if (searchTerm) {
+      filtered = filtered.filter(char =>
+        char.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    }
+
+    // Filtrar por estado
+    switch(filter) {
+      case 'alive':
+        return filtered.filter(char => char.status === 'Alive')
+      case 'dead':
+        return filtered.filter(char => char.status === 'Dead')
+      case 'unknown':
+        return filtered.filter(char => char.status === 'unknown')
+      case 'human':
+        return filtered.filter(char => char.species === 'Human')
+      case 'alien':
+        return filtered.filter(char => char.species === 'Alien')
+      default:
+        return filtered
+    }
+  }
+
+  const filteredFavorites = getFilteredFavorites()
+
+  // Calcular estadísticas
   const stats = {
     total: favorites.length,
-    alive: favorites.filter(f => f.status === 'Alive').length,
-    dead: favorites.filter(f => f.status === 'Dead').length,
-    unknown: favorites.filter(f => f.status === 'unknown').length,
-    human: favorites.filter(f => f.species === 'Human').length,
-    alien: favorites.filter(f => f.species === 'Alien').length,
+    alive: favorites.filter(char => char.status === 'Alive').length,
+    human: favorites.filter(char => char.species === 'Human').length,
+    alien: favorites.filter(char => char.species === 'Alien').length
   }
 
   return (
     <div className="favorites-container">
       <div className="favorites-header">
-        <h1>💜 Mis Personajes Favoritos</h1>
+        <h1>❤️ Mis Favoritos ❤️</h1>
         <p className="favorites-subtitle">
-          Tienes {stats.total} {stats.total === 1 ? 'personaje' : 'personajes'} en tu colección
+          Tu colección personal de personajes de Rick and Morty
         </p>
       </div>
 
-      {favorites.length > 0 && (
+      {favorites.length > 0 ? (
         <>
           {/* Estadísticas */}
           <div className="favorites-stats">
             <div className="stat-card">
-              <span className="stat-emoji">👽</span>
-              <span className="stat-number">{stats.alien}</span>
-              <span className="stat-label">Aliens</span>
+              <span className="stat-emoji">📊</span>
+              <span className="stat-number">{stats.total}</span>
+              <span className="stat-label">Total</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-emoji">💚</span>
+              <span className="stat-number">{stats.alive}</span>
+              <span className="stat-label">Vivos</span>
             </div>
             <div className="stat-card">
               <span className="stat-emoji">👤</span>
               <span className="stat-number">{stats.human}</span>
               <span className="stat-label">Humanos</span>
             </div>
-            <div className="stat-card alive">
-              <span className="stat-emoji">✅</span>
-              <span className="stat-number">{stats.alive}</span>
-              <span className="stat-label">Vivos</span>
-            </div>
-            <div className="stat-card dead">
-              <span className="stat-emoji">💀</span>
-              <span className="stat-number">{stats.dead}</span>
-              <span className="stat-label">Muertos</span>
+            <div className="stat-card">
+              <span className="stat-emoji">👽</span>
+              <span className="stat-number">{stats.alien}</span>
+              <span className="stat-label">Aliens</span>
             </div>
           </div>
 
-          {/* Filtros */}
-          <div className="favorites-filters">
-            <button
-              className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-              onClick={() => setFilter('all')}
-            >
-              Todos ({stats.total})
-            </button>
-            <button
-              className={`filter-btn ${filter === 'alive' ? 'active' : ''}`}
-              onClick={() => setFilter('alive')}
-            >
-              Vivos ({stats.alive})
-            </button>
-            <button
-              className={`filter-btn ${filter === 'dead' ? 'active' : ''}`}
-              onClick={() => setFilter('dead')}
-            >
-              Muertos ({stats.dead})
-            </button>
-            <button
-              className={`filter-btn ${filter === 'unknown' ? 'active' : ''}`}
-              onClick={() => setFilter('unknown')}
-            >
-              Desconocido ({stats.unknown})
-            </button>
+          {/* Controles */}
+          <div className="favorites-controls">
+            <div className="filter-container">
+              <button
+                className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+                onClick={() => setFilter('all')}
+              >
+                Todos
+              </button>
+              <button
+                className={`filter-btn ${filter === 'alive' ? 'active' : ''}`}
+                onClick={() => setFilter('alive')}
+              >
+                Vivos
+              </button>
+              <button
+                className={`filter-btn ${filter === 'dead' ? 'active' : ''}`}
+                onClick={() => setFilter('dead')}
+              >
+                Muertos
+              </button>
+              <button
+                className={`filter-btn ${filter === 'human' ? 'active' : ''}`}
+                onClick={() => setFilter('human')}
+              >
+                Humanos
+              </button>
+              <button
+                className={`filter-btn ${filter === 'alien' ? 'active' : ''}`}
+                onClick={() => setFilter('alien')}
+              >
+                Aliens
+              </button>
+            </div>
 
-            <button
-              className="clear-all-btn"
-              onClick={clearAllFavorites}
-            >
-              🗑️ Limpiar Todo
+            <button className="clear-all-btn" onClick={clearAllFavorites}>
+              🗑️ Borrar Todo
             </button>
           </div>
+
+          {/* Grid de favoritos */}
+          <div className="favorites-grid">
+            {filteredFavorites.map(character => (
+              <div key={character.id} className="favorite-card">
+                <button
+                  className="remove-favorite-btn"
+                  onClick={() => removeFavorite(character.id)}
+                  title="Eliminar de favoritos"
+                >
+                  ❌
+                </button>
+
+                <img
+                  src={character.image}
+                  alt={character.name}
+                  className="favorite-image"
+                />
+
+                <div className="favorite-info">
+                  <h3>{character.name}</h3>
+                  <div className="favorite-details">
+                    <span className={`status ${character.status.toLowerCase()}`}>
+                      {character.status === 'Alive' ? '🟢' : character.status === 'Dead' ? '🔴' : '⚪'} {character.status}
+                    </span>
+                    <span className="species">
+                      {character.species}
+                    </span>
+                  </div>
+
+                  {character.location && (
+                    <p className="location-info">
+                      📍 {character.location.name}
+                    </p>
+                  )}
+
+                  <button
+                    className="view-details-btn"
+                    onClick={() => goToDetails(character.id)}
+                  >
+                    Ver detalles completos
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filteredFavorites.length === 0 && favorites.length > 0 && (
+            <div className="empty-favorites">
+              <div className="empty-icon">🔍</div>
+              <h2>No hay favoritos que coincidan con el filtro</h2>
+              <p>Prueba con otro filtro o criterio de búsqueda</p>
+            </div>
+          )}
         </>
-      )}
-
-      {filteredFavorites.length === 0 && favorites.length > 0 && (
-        <div className="empty-filter">
-          <p>No hay personajes con este filtro</p>
-        </div>
-      )}
-
-      {favorites.length === 0 ? (
+      ) : (
         <div className="empty-favorites">
           <div className="empty-icon">💔</div>
           <h2>No tienes favoritos aún</h2>
-          <p>Ve a la página principal y agrega tus personajes favoritos</p>
+          <p>Explora personajes y marca tus favoritos con el corazón</p>
           <button
             className="go-home-btn"
             onClick={() => navigate('/home')}
           >
             Explorar Personajes
           </button>
-        </div>
-      ) : (
-        <div className="favorites-grid">
-          {filteredFavorites.map(character => (
-            <div key={character.id} className="favorite-card">
-              <button
-                className="remove-favorite-btn"
-                onClick={() => removeFavorite(character.id)}
-                title="Eliminar de favoritos"
-              >
-                ✕
-              </button>
-
-              <img
-                src={character.image}
-                alt={character.name}
-                className="favorite-image"
-              />
-
-              <div className="favorite-info">
-                <h3>{character.name}</h3>
-                <div className="favorite-details">
-                  <span className={`status ${character.status.toLowerCase()}`}>
-                    {character.status === 'Alive' ? '🟢' : character.status === 'Dead' ? '🔴' : '⚫'} {character.status}
-                  </span>
-                  <span className="species">{character.species}</span>
-                </div>
-
-                <div className="favorite-actions">
-                  <button
-                    className="view-details-btn"
-                    onClick={() => navigate(`/detalle/${character.id}`)}
-                  >
-                    Ver Detalles
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       )}
     </div>

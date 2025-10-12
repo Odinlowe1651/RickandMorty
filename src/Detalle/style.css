@@ -1,0 +1,430 @@
+/* Detalle/style.css - Estilos completos para la página de detalles */
+
+.detail-container {
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+}
+
+/* Botón de volver */
+.back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenido principal */
+.detail-content {
+  max-width: 1200px;
+  margin: 4rem auto 0;
+  animation: fadeIn 0.8s ease;
+}
+
+/* Sección principal con imagen e info */
+.detail-main {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
+}
+
+/* Sección de imagen */
+.detail-image-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.detail-image {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.detail-image:hover {
+  transform: scale(1.02);
+}
+
+.favorite-detail-btn {
+  padding: 1rem;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.favorite-detail-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(240, 87, 108, 0.4);
+}
+
+.favorite-detail-btn.active {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  animation: pulse 2s infinite;
+}
+
+/* Información del personaje */
+.detail-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.character-name {
+  font-size: 2.5rem;
+  color: #333;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Badges de estado */
+.character-badges {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.status-badge,
+.species-badge,
+.type-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.status-badge.alive {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.dead {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.unknown {
+  background: #e7e7e7;
+  color: #666;
+}
+
+.species-badge {
+  background: linear-gradient(135deg, #667eea20, #764ba220);
+  color: #667eea;
+  border: 1px solid #667eea50;
+}
+
+.type-badge {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* Grid de detalles */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 15px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Estadísticas del personaje */
+.character-stats {
+  display: flex;
+  justify-content: space-around;
+  background: linear-gradient(135deg, #667eea10, #764ba210);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.stat-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-icon {
+  font-size: 2rem;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.stat-text {
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sección de episodios */
+.episodes-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+}
+
+.episodes-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.episodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.episode-card {
+  background: linear-gradient(135deg, #667eea10, #764ba210);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.episode-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+}
+
+.episode-number {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.episode-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.episode-code {
+  color: #667eea;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+}
+
+.episode-date {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Botones de acción */
+.detail-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.home-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.home-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.favorites-btn {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+}
+
+.favorites-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+}
+
+.netflix-btn {
+  background: #e50914;
+  color: white;
+}
+
+.netflix-btn:hover {
+  background: #b20710;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(229, 9, 20, 0.4);
+}
+
+/* Estados de carga y error */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: white;
+}
+
+.portal-loader {
+  width: 80px;
+  height: 80px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.5rem;
+}
+
+.error-state {
+  text-align: center;
+  padding: 4rem;
+  color: white;
+}
+
+.error-state h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .detail-main {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-image-section {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .back-button {
+    position: static;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .character-stats {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .detail-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
