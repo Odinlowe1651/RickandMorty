@@ -448,22 +448,271 @@
   }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* ========== REEMPLAZAR SECCIÓN RESPONSIVE CON ESTO ========== */
+/* Responsive Completo para Móviles */
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+  .informativa-container {
+    padding: 1rem;
+  }
+
+  .info-header {
+    margin-bottom: 2rem;
+  }
+
   .info-title {
     font-size: 2rem;
   }
 
-  .serie-info-grid {
-    grid-template-columns: 1fr;
+  .info-subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 
-  .stats-cards {
-    grid-template-columns: repeat(2, 1fr);
+  /* Tabs */
+  .info-tabs {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
   }
 
   .tab-btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Grid de información */
+  .serie-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .info-card h2 {
+    font-size: 1.4rem;
+  }
+
+  /* Estadísticas */
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-card-info {
+    padding: 1.5rem;
+  }
+
+  .stat-emoji {
+    font-size: 2rem;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  /* Curiosidades */
+  .curiosidades-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .curiosidad-card {
+    padding: 1.5rem;
+  }
+
+  /* Personajes */
+  .personajes-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .personaje-card {
+    padding: 1.5rem;
+  }
+
+  /* Temporadas */
+  .temporada-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .temporada-info {
+    padding: 1rem;
+  }
+
+  /* Secciones */
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .extra-facts {
+    padding: 1.5rem;
+  }
+
+  .personajes-extra {
+    padding: 1.5rem;
+  }
+
+  .future-info {
+    padding: 1.5rem;
+  }
+}
+
+/* Móviles pequeños */
+@media screen and (max-width: 480px) {
+  .informativa-container {
+    padding: 0.5rem;
+  }
+
+  .info-title {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .info-subtitle {
+    font-size: 0.9rem;
+  }
+
+  /* Tabs en móviles */
+  .info-tabs {
+    gap: 0.3rem;
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* Cards de estadísticas */
+  .stat-card-info {
+    padding: 1rem;
+  }
+
+  .stat-emoji {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+
+  /* Info items */
+  .info-item {
+    flex-direction: column;
+    text-align: left;
+    gap: 0.3rem;
+  }
+
+  .info-value {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  /* Textos */
+  .synopsis {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  /* Cards */
+  .info-card {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  .info-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .curiosidad-card {
+    padding: 1rem;
+  }
+
+  .curiosidad-emoji {
+    font-size: 2rem;
+  }
+
+  .curiosidad-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .curiosidad-card p {
+    font-size: 0.9rem;
+  }
+
+  /* Personajes móvil */
+  .personaje-card {
+    padding: 1rem;
+  }
+
+  .personaje-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .personaje-frase {
+    font-size: 0.95rem;
+    padding: 0.8rem;
+  }
+
+  /* Listas */
+  .facts-list li {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .menciones-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mencion {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Temporadas móvil */
+  .temporada-numero {
+    font-size: 1.1rem;
+  }
+
+  .temporada-año {
+    font-size: 0.95rem;
+  }
+
+  .temporada-info p {
+    font-size: 0.9rem;
+  }
+
+  .future-info p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Móviles muy pequeños */
+@media screen and (max-width: 360px) {
+  .info-tabs {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .tab-btn {
+    width: 100%;
+  }
+
+  .stats-cards {
+    grid-template-columns: 1fr;
   }
 }
