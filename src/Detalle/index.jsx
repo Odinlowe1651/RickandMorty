@@ -84,9 +84,7 @@ function Detalle() {
 
   return (
     <div className="detail-container">
-      <button onClick={() => navigate(-1)} className="back-button">
-        ← Volver
-      </button>
+      
 
       <div className="detail-content">
         <div className="detail-main">

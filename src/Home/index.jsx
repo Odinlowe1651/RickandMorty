@@ -95,7 +95,7 @@ function Home() {
   return (
     <div className="home-container">
       <div className="home-header">
-        <h1 className="home-title">Rick and Morty Characters</h1>
+        <h1 className="home-title">👽Rick & Morty Personajes👽</h1>
 
         <form onSubmit={handleSearch} className="search-form">
           <input
