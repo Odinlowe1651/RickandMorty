@@ -1,4 +1,4 @@
-// Favoritos/index.jsx - Completo con navegación a detalles
+// Favoritos/index.jsx - Agregar estado para el modal
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './style.css'
@@ -7,6 +7,7 @@ function Favoritos() {
   const [favorites, setFavorites] = useState([])
   const [filter, setFilter] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
+  const [showDeleteModal, setShowDeleteModal] = useState(false) // NUEVO
   const navigate = useNavigate()
 
   // Cargar favoritos del localStorage
@@ -24,12 +25,11 @@ function Favoritos() {
     localStorage.setItem('rickMortyFavorites', JSON.stringify(updatedFavorites))
   }
 
-  // Limpiar todos los favoritos
+  // Limpiar todos los favoritos - MODIFICADO
   const clearAllFavorites = () => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar todos los favoritos?')) {
-      setFavorites([])
-      localStorage.removeItem('rickMortyFavorites')
-    }
+    setFavorites([])
+    localStorage.removeItem('rickMortyFavorites')
+    setShowDeleteModal(false) // Cerrar modal
   }
 
   // Navegar a detalles
@@ -41,14 +41,12 @@ function Favoritos() {
   const getFilteredFavorites = () => {
     let filtered = [...favorites]
 
-    // Filtrar por búsqueda
     if (searchTerm) {
       filtered = filtered.filter(char =>
         char.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
-    // Filtrar por estado
     switch(filter) {
       case 'alive':
         return filtered.filter(char => char.status === 'Alive')
@@ -67,7 +65,6 @@ function Favoritos() {
 
   const filteredFavorites = getFilteredFavorites()
 
-  // Calcular estadísticas
   const stats = {
     total: favorites.length,
     alive: favorites.filter(char => char.status === 'Alive').length,
@@ -77,6 +74,31 @@ function Favoritos() {
 
   return (
     <div className="favorites-container">
+      {/* MODAL DE CONFIRMACIÓN - NUEVO */}
+      {showDeleteModal && (
+        <div className="modal-overlay" onClick={() => setShowDeleteModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>⚠️ Confirmar eliminación</h2>
+            <p>¿Estás seguro de que quieres eliminar TODOS los favoritos?</p>
+            <p className="modal-warning">Esta acción no se puede deshacer.</p>
+            <div className="modal-buttons">
+              <button
+                className="modal-btn cancel"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                Cancelar
+              </button>
+              <button
+                className="modal-btn confirm"
+                onClick={clearAllFavorites}
+              >
+                Sí, eliminar todo
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="favorites-header">
         <h1>❤️ Mis Favoritos ❤️</h1>
         <p className="favorites-subtitle">
@@ -145,7 +167,11 @@ function Favoritos() {
               </button>
             </div>
 
-            <button className="clear-all-btn" onClick={clearAllFavorites}>
+            {/* BOTÓN MODIFICADO - Sin window.confirm */}
+            <button
+              className="clear-all-btn"
+              onClick={() => setShowDeleteModal(true)}
+            >
               🗑️ Borrar Todo
             </button>
           </div>
@@ -189,7 +215,7 @@ function Favoritos() {
                     className="view-details-btn"
                     onClick={() => goToDetails(character.id)}
                   >
-                    Ver detalles
+                    Ver detalles completos
                   </button>
                 </div>
               </div>
