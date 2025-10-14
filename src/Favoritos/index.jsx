@@ -215,7 +215,7 @@ function Favoritos() {
                     className="view-details-btn"
                     onClick={() => goToDetails(character.id)}
                   >
-                    Ver detalles completos
+                    Ver detalles
                   </button>
                 </div>
               </div>
